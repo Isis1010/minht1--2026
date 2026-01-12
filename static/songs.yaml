@@ -1,0 +1,8 @@
+- name: "Lofi Hip Hop"
+  artist: "Lofi Girl"
+  album: "Lofi Beats"
+  url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+- name: "Relaxing Jazz"
+  artist: "Jazz Master"
+  album: "Midnight Sessions"
+  url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"
