@@ -23,23 +23,25 @@ export const syncSongsFromYaml = async (yamlContent: string) => {
                 const artistUuid = crypto.randomUUID()
                 const albumUuid = crypto.randomUUID()
 
-                // Simplified for MVP: always add as new if not checking for duplicates
-                // In a real app we'd check if artist/album already exists
+                const trackId = Math.floor(Math.random() * 1000000000)
+                const artistId = Math.floor(Math.random() * 1000000000)
+                const albumId = Math.floor(Math.random() * 1000000000)
+
                 await tx.objectStore('artists').put({
-                        id: Math.floor(Math.random() * 1000000000),
+                        id: artistId,
                         uuid: artistUuid,
                         name: song.artist,
                 })
 
                 await tx.objectStore('albums').put({
-                        id: Math.floor(Math.random() * 1000000000),
+                        id: albumId,
                         uuid: albumUuid,
                         name: song.album,
                         artists: [song.artist],
                 })
 
                 await tx.objectStore('tracks').put({
-                        id: Math.floor(Math.random() * 1000000000),
+                        id: trackId,
                         uuid: trackUuid,
                         name: song.name,
                         album: song.album,
