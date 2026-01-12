@@ -368,4 +368,3 @@ export class PlayerStore {
 		this.currentTime = 0
 		this.duration = 0
 	}
-}
