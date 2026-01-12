@@ -26,10 +26,10 @@ const config = {
 		csp: {
 			directives: {
 				'default-src': ['none'],
-				'script-src': ['self', 'https://gc.zgo.at/'],
+				'script-src': ['self', 'https://gc.zgo.at/', 'https://replit-cdn.com'],
 				'style-src': ['self', 'unsafe-inline'],
 				'img-src': ['self', 'blob:', 'https://snaeplayer.goatcounter.com/count'],
-				'media-src': ['self', 'blob:'],
+				'media-src': ['self', 'blob:', 'https://www.soundhelix.com'],
 				'font-src': ['self'],
 				'connect-src': ['self', 'https://snaeplayer.goatcounter.com'],
 				'form-action': ['none'],
