@@ -28,7 +28,7 @@ const getTrackFile = async (track: FileEntity) => {
 
 export const cleanupTrackAudio = (audio: HTMLAudioElement): void => {
         const currentSrc = audio.src
-        if (currentSrc) {
+        if (currentSrc && currentSrc.startsWith('blob:')) {
                 URL.revokeObjectURL(currentSrc)
         }
 }
@@ -37,8 +37,8 @@ export const loadTrackAudio = async (
         audio: HTMLAudioElement,
         entity: FileEntity | string,
 ): Promise<boolean> => {
+        cleanupTrackAudio(audio)
         if (typeof entity === 'string') {
-                cleanupTrackAudio(audio)
                 audio.src = entity
                 return true
         }
