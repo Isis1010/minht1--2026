@@ -3,48 +3,53 @@ import type { FileEntity } from '$lib/helpers/file-system'
 export type PlayerRepeat = 'none' | 'one' | 'all'
 
 const getTrackFile = async (track: FileEntity) => {
-	if (track instanceof File) {
-		return track
-	}
+        if (track instanceof File) {
+                return track
+        }
 
-	let mode = await track.queryPermission({ mode: 'read' })
-	if (mode !== 'granted') {
-		try {
-			// Try to request permission if it's not denied.
-			if (mode === 'prompt') {
-				mode = await track.requestPermission({ mode: 'read' })
-			}
-		} catch {
-			// User activation is required to request permission. Catch the error.
-		}
+        let mode = await track.queryPermission({ mode: 'read' })
+        if (mode !== 'granted') {
+                try {
+                        // Try to request permission if it's not denied.
+                        if (mode === 'prompt') {
+                                mode = await track.requestPermission({ mode: 'read' })
+                        }
+                } catch {
+                        // User activation is required to request permission. Catch the error.
+                }
 
-		if (mode !== 'granted') {
-			return null
-		}
-	}
+                if (mode !== 'granted') {
+                        return null
+                }
+        }
 
-	return track.getFile()
+        return track.getFile()
 }
 
 export const cleanupTrackAudio = (audio: HTMLAudioElement): void => {
-	const currentSrc = audio.src
-	if (currentSrc) {
-		URL.revokeObjectURL(currentSrc)
-	}
+        const currentSrc = audio.src
+        if (currentSrc) {
+                URL.revokeObjectURL(currentSrc)
+        }
 }
 
 export const loadTrackAudio = async (
-	audio: HTMLAudioElement,
-	entity: FileEntity,
+        audio: HTMLAudioElement,
+        entity: FileEntity | string,
 ): Promise<boolean> => {
-	const file = await getTrackFile(entity)
-	cleanupTrackAudio(audio)
+        if (typeof entity === 'string') {
+                cleanupTrackAudio(audio)
+                audio.src = entity
+                return true
+        }
+        const file = await getTrackFile(entity)
+        cleanupTrackAudio(audio)
 
-	if (!file) {
-		return false
-	}
+        if (!file) {
+                return false
+        }
 
-	audio.src = URL.createObjectURL(file)
+        audio.src = URL.createObjectURL(file)
 
-	return true
+        return true
 }
